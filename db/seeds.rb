@@ -1,4 +1,6 @@
 require 'ffaker'
+Task.destroy_all
+User.destroy_all
 
 User.create!(email: 'q@q.q', password: '123654789', name: 'Adamn')
 
@@ -8,6 +10,6 @@ end
 
 User.all.each do |user|
   10.times do
-    user.tasks.create!(name: [FFaker::Food.fruit, FFaker::Food.meat , FFaker::Food.vegetable , FFaker::Food.herb_or_spice].sample, content: FFaker::HealthcareIpsum.paragraph)
+    user.created_tasks.create!(name: [FFaker::Food.fruit, FFaker::Food.meat , FFaker::Food.vegetable , FFaker::Food.herb_or_spice].sample, content: FFaker::HealthcareIpsum.paragraph)
   end
 end

@@ -2,10 +2,15 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all.page(params[:page]).per(30)
+    @authored_task = Task.authored(current_user)
+    @visible_tasks = Task.visible_tasks(current_user)
   end
 
   def show
+    unless @task.visible_for current_user
+      redirect_to '/'
+      flash[:error] = 'You can\'t see this'
+    end
   end
 
   def new
@@ -44,7 +49,7 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.require(:task).permit(:name, :content, user_ids:[])
+      params.require(:task).permit(:name, :content, :mutual_task, user_ids:[])
 
     end
 end

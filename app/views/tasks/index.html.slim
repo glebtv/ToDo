@@ -2,5 +2,7 @@
   h1 Listing tasks
 .page-content
   a href=new_task_path class='btn btn-primary' New Task
-
-  == render 'list', tasks: @tasks
+  h1 Authored:
+  == render 'list', tasks: @authored_task
+  h1 Assigment:
+  == render 'list', tasks: @visible_tasks

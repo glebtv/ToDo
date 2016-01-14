@@ -6,4 +6,6 @@ class User < ActiveRecord::Base
   has_many :created_tasks, class_name: "Task", foreign_key: :author_id
 
   validates :name, presence: true
+
+  
 end

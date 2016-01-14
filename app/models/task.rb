@@ -6,4 +6,11 @@ class Task < ActiveRecord::Base
 
   default_scope { order('updated_at DESC') }
 
+  
+  scope :visible_tasks, ->  user{ joins(:users).where('users.id = ?',user)}
+  scope :authored, -> user{where(author_id: user)}
+
+  def visible_for(user)
+    author == user || users.to_a.include?(user)
+  end
 end

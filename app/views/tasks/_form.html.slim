@@ -16,8 +16,14 @@
     =f.label :content, class: 'control-label col-sm-2'
     .col-sm-10
       =f.text_area :content, class: 'form-control'
-
+  
   .form-group
+    =f.label :mutual_task, class: 'control-label col-sm-2'
+    .col-sm-10
+      =f.check_box :mutual_task, class: 'multiform-checkbox'
+
+
+  .form-group.multiform
     =f.label 'receivers', class: 'control-label col-sm-2'
     .col-sm-10
       =f.collection_select :user_ids, User.where.not(id: current_user.id), :id, :name, {}, {class: 'multiselect', multiple: "multiple"}
