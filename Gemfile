@@ -17,7 +17,7 @@ gem 'rails_12factor', group: :production
 
 gem 'unicorn'
 
-gem 'kaminari'
+gem 'kaminari'  
 
 gem 'paperclip'
 

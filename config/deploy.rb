@@ -49,9 +49,9 @@ set :bundle_cmd,      "rvm use #{fetch(:rvm_ruby_version)} do bundle"
 
 set :assets_roles, [:web, :app]
 
-set :unicorn_start_cmd,
-    "(cd #{fetch(:deploy_to)}/current; rvm use #{fetch(:rvm_ruby_version)} " \
-    "do bundle exec unicorn_rails -Dc #{fetch(:unicorn_conf)})"
+# set :unicorn_start_cmd,
+#     "(cd #{fetch(:deploy_to)}/current; rvm use #{fetch(:rvm_ruby_version)} " \
+#     "do bundle exec unicorn_rails -Dc #{fetch(:unicorn_conf)})"
 
 # - for unicorn - #
 namespace :deploy do
