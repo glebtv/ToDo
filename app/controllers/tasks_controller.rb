@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all.per(20)
+    @tasks = Task.all.page(params[:page]).per(30)
   end
 
   def show
@@ -17,7 +17,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    @task.user_id = current_user.id
+    @task.author_id = current_user.id
     if @task.save
       redirect_to @task, notice: 'Task was successfully created.'
     else
@@ -44,7 +44,7 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.require(:task).permit(:name, :content)
+      params.require(:task).permit(:name, :content, user_ids:[])
 
     end
 end

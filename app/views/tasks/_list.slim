@@ -2,9 +2,7 @@ table class='table'
   thead
     tr
       th Name
-      - unless params[:controller] == 'users'
-        th Author
-      
+      th Author
       th Last Update
       th
       th
@@ -14,19 +12,20 @@ table class='table'
       tr
         td 
           a href=task_path(task) #{task.name}
+        td
+            a href=user_path(task.author) 
+              =task.author.name
       
-        - unless params[:controller] == 'users'
-          td 
-            a href=user_path(task.user) 
-              =task.user.name
-        
         td = task.updated_at.strftime('%m/%d %H:%m')
         
-        - if task.user == current_user
+        - if task.author == current_user
           td = link_to 'Edit', edit_task_path(task), class: 'btn btn-default'
           td = link_to 'Destroy', task, data: {:confirm => 'Are you sure?'}, :method => :delete, class: 'btn btn-danger'
         - else
           td
           td
           td
-=console
+
+- unless tasks.try(:last_page?).nil?
+  .text-center
+    = paginate tasks, theme: 'twitter-bootstrap-3'
