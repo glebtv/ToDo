@@ -58,7 +58,7 @@ namespace :deploy do
   desc 'Start application'
   task :start do
     on roles(:app) do
-      execute unicorn_start_cmd
+      # execute unicorn_start_cmd
     end
   end
 
