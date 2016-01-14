@@ -1,0 +1,5 @@
+.page-header
+  h2 #{@user.name}
+.page-content
+  h3 User tasks:
+  ==render 'tasks/list', tasks: @user.tasks

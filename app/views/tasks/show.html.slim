@@ -1,0 +1,9 @@
+.page-header
+  h1 #{@task.name}
+.page-content
+  p #{@task.content}
+  .author-row
+    p Author: 
+    a href=user_path(@task.user) #{@task.user.name}
+  
+  

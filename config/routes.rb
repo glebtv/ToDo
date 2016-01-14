@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
+
   devise_for :users
 
-  get 'users' => 'users#index', as: 'users'
+  resources :tasks
+  resources :users, only: [:index, :show]
+
+  root 'tasks#index'
 end
