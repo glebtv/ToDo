@@ -17,7 +17,7 @@ gem 'rails_12factor', group: :production
 
 gem 'unicorn'
 
-gem 'kaminari'  
+gem 'kaminari'
 
 gem 'paperclip'
 
@@ -28,18 +28,13 @@ gem 'devise'
 gem 'devise-bootstrap-views'
 
 
+gem 'ffaker'
 group :development, :test do
   gem 'byebug'
   gem 'pry'
-  gem 'ffaker'
   gem 'rb-readline'
 end
 
 group :development do
   gem 'web-console', '~> 2.0'
-
-  gem 'capistrano'
-  gem 'capistrano-rvm'
-  gem 'capistrano-bundler'
-  gem 'capistrano-rails'
 end

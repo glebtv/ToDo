@@ -1,5 +1,5 @@
 == ToDo SHARE
-http://todo.q3pp.lclients.ru/
+https://radiant-garden-3511.herokuapp.com/users/sign_in
 
 Задача:
 * разработать туду-лист
