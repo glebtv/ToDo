@@ -1,0 +1,13 @@
+.navbar.navbar-default
+  a href='/' class='navbar-brand' ToDo 
+  
+  - if current_user
+    ul.nav.navbar-nav.navbar-right
+      li
+        a 
+          = current_user.name
+    
+      li 
+        a href=destroy_user_session_path data-method="delete" class='btn'
+            strong Sign out
+    
