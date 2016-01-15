@@ -1,5 +1,5 @@
 == ToDo SHARE
-https://radiant-garden-3511.herokuapp.com/users/sign_in
+https://radiant-garden-3511.herokuapp.com/
 
 Задача:
 * разработать туду-лист
