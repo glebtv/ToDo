@@ -19,7 +19,7 @@ describe 'Task' do
     it { should_not be_valid }
   end
 
-  describe 'when create task' do
+  describe 'when user create task' do
     before do
       @micropost = user.created_tasks.build(name: 'ohladite', content: '............')
     end

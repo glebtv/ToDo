@@ -4,8 +4,7 @@ RSpec.describe User, type: :model do
   @user = FactoryGirl.create(:user)
   subject{@user}
 
-  describe 'created task associations' do
-    before {}
+  describe 'create task associations' do
 
     let!(:older_task) do
       FactoryGirl.create(:created_task, author: @user, created_at: 1.day.ago)
