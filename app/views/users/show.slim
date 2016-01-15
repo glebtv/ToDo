@@ -2,6 +2,6 @@
   h2 #{@user.name}
 .page-content
   h3 User tasks:
-  ==render 'tasks/list', tasks: @visible_tasks
+  ==render 'tasks/list', tasks: @authored_task
   h3 User assigned:
-  ==render 'tasks/list', tasks: @assigned_tasks
+  ==render 'tasks/list', tasks: @visible_tasks
