@@ -12,9 +12,6 @@ class UsersController < ApplicationController
     else
       @authored_task = @user.tasks.authored(current_user)
       @visible_tasks = @user.tasks.visible_tasks(current_user)
-
-      # @visible_tasks = @user.created_tasks.visible_tasks(current_user)
-      # @assigned_tasks = @user.tasks.where(author_id: current_user)
     end
   end
 

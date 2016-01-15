@@ -1,17 +1,15 @@
-development:
+default: &default
   adapter: postgresql
   user: todo
   password: todo
   encoding: unicode
-  database: todo_development
+  pool: 5
   host: localhost
-  pool: 5
 
-production:
-  adapter: postgresql
-  host: postgresql0.locum.ru
-  database: q3pp_todo90
-  user: q3pp_todo90
-  password: YGl3kNYtCyW
-  encoding: unicode
-  pool: 5
+development:
+  <<: *default
+  database: todo_development
+
+test:
+  <<: *default
+  database: todo_test

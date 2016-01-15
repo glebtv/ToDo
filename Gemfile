@@ -28,12 +28,17 @@ gem 'thor'
 gem 'devise'
 gem 'devise-bootstrap-views'
 
-
 gem 'ffaker'
+
 group :development, :test do
   gem 'byebug'
   gem 'pry'
   gem 'rb-readline'
+
+  gem 'rspec-rails'
+  gem 'capybara'
+  gem 'rspec-its'
+  gem 'factory_girl_rails'
 end
 
 group :development do
