@@ -10,6 +10,7 @@ RSpec.describe TasksController, :type => :controller do
   let(:task){ FactoryGirl.create(:task, author: @user)}
   let(:ryder){ FactoryGirl.create(:ryder) }
   let(:another_task){ FactoryGirl.create(:task, author: ryder)}
+  let(:one_more_task){FactoryGirl.create(:task, author: ryder)}
 
   describe "Post create" do
 
@@ -63,9 +64,18 @@ RSpec.describe TasksController, :type => :controller do
       assigns(:authored_task).should eq ([task])
     end
 
+    it "should show only assigned task" do
+      @user.tasks << another_task
+      get :index
+      assigns(:visible_tasks).should eq ([another_task])
+      assigns(:visible_tasks).should_not eq ([another_task, one_more_task])
+      assigns(:authored_task).should eq ([task])
+    end
+
   end
 
   describe "Get show" do
+
     it "should return task" do
       get :show, id: task
       assigns(:task).should eq task
@@ -75,6 +85,7 @@ RSpec.describe TasksController, :type => :controller do
       get :show, id: another_task
       response.should redirect_to '/'
     end
+
   end
 
   describe "Delete destroy" do
