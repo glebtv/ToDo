@@ -1,43 +1,57 @@
 require 'rails_helper'
 
-describe 'Task' do
+describe Task do
 
-  before {@task = Task.new(name: 'BigSmoke', content: 'Ryder')}
-  let(:user) { FactoryGirl.create(:user) }
 
-  subject {@task}
-
-  it { should be_valid }
-
-  describe "when name isn't present" do
-    before {@task.name = ''}
-    it { should_not be_valid }
+  before :each do
+    @user = FactoryGirl.create(:user)
+    @task = FactoryGirl.create(:task, author: @user)
+    @another_user = FactoryGirl.create(:ryder)
   end
 
-  describe "when content isn't present" do
-    before {@task.content = ''}
-    it { should_not be_valid }
+  it 'should be valid' do
+    expect(@task).to be_valid
   end
 
-  describe 'when user create task' do
-    before do
-      @micropost = user.created_tasks.build(name: 'ohladite', content: '............')
+  it "is invalid when name isn't present" do
+    @task.name = ''
+    expect(@task).not_to be_valid
+  end
+
+  it "is invalid when content isn't present" do
+    @task.content = ''
+    expect(@task).not_to be_valid
+  end
+
+  describe "visibility for user" do
+    before :each do
+      @another_task = FactoryGirl.create(:task, author: @another_user)
     end
 
-    subject {@micropost}
+    it "visible to author" do
+      expect(@task.visible_for(@user)).to eq true
+    end
 
-    it { should respond_to(:name) }
-    it { should respond_to(:content) }
-    it { should respond_to(:author_id) }
-    its(:author) { should eq user }
-    its(:author) { should_not eq User.new()}
+    it "not visible to not assigned user" do
+      expect(@another_task.visible_for(@user)).to eq false
+    end
+
+    it "visible to assigned user" do
+      @another_task.users.push @user
+      expect(@another_task.visible_for(@user)).to eq true
+    end
   end
 
-  describe 'when user try see taks other user' do
-    let(:sweet){ FactoryGirl.create(:user, email: 'sweet@sa.sa', name: 'sweet') }
-    let(:ryder){ FactoryGirl.create(:user, email: 'Ryder@sa.sa', name: 'ryder') }
-    let(:visible_task){ }
-    let(:invisible_task){ }
-
+  it "returns authored tasks by user" do
+    another_task = FactoryGirl.create(:task, author: @user)
+    expect(Task.authored(@user).to_a).to eq [another_task,@task]
   end
+
+  it "returns tasks assigned to user" do
+    another_task = FactoryGirl.create(:task, author: @user)
+    @another_user.tasks << @task
+    @another_user.tasks << another_task
+    expect(Task.assigned(@another_user).to_a).to eq [another_task, @task]
+  end
+
 end

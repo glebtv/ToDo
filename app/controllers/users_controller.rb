@@ -11,7 +11,7 @@ class UsersController < ApplicationController
       @visible_tasks = current_user.tasks
     else
       @authored_task = @user.tasks.authored(current_user)
-      @visible_tasks = @user.tasks.visible_tasks(current_user)
+      @visible_tasks = @user.tasks.assigned(current_user)
     end
   end
 

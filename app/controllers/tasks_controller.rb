@@ -4,7 +4,7 @@ class TasksController < ApplicationController
 
   def index
     @authored_task = Task.authored(current_user)
-    @visible_tasks = Task.visible_tasks(current_user)
+    @visible_tasks = Task.assigned(current_user)
   end
 
   def show
