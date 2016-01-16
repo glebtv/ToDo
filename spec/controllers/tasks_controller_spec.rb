@@ -25,7 +25,7 @@ RSpec.describe TasksController, :type => :controller do
     it "should have author" do
       post :create, task: attributes_for(:task)
       expect(assigns(:task).author).to eq @user
-    end
+v    end
 
   end
 

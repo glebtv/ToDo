@@ -10,6 +10,7 @@
 .navbar-right:last-child{
    margin-right: 10px;
 }
+
 .multiform-checkbox{
   margin-top: 10px!important;
   -ms-transform: scale(2); /* IE */
@@ -17,6 +18,32 @@
   -webkit-transform: scale(2); /* Safari and Chrome */
   -o-transform: scale(2); /* Opera */
 }
+
 .assigment-row{
   font-size: 18px;
+}
+
+.complete, .not-complete{
+  padding: 5px;
+  font-size: 18px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  -webkit-transition: all .5s;
+  -moz-transition: all .5s;
+  -o-transition: all .5s;
+  transition: all .5s;
+  &:hover{
+    color: black;
+  }
+}
+.complete{
+  background-color: #5CB85C;
+}
+.not-complete{
+  background-color: #D9534F;
+  &:hover{
+    background-color: #c9302c;
+    color: black;
+  }
 }

@@ -7,4 +7,7 @@ init = ->
     $form.hide()
   $checkbox.on 'click', ->
     $form.slideToggle()
+
+
+
 $(document).on('page:change', init)

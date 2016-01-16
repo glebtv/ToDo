@@ -6,6 +6,7 @@ table class='table'
       th Last Update
       th
       th
+      th
 
   tbody
     - tasks.each do |task|
@@ -18,6 +19,11 @@ table class='table'
       
         td = task.updated_at.strftime('%m/%d %H:%m')
         
+        td 
+          - if task.complete
+            span.glyphicon.glyphicon-ok.complete data-id=task.id
+          - else
+            span.glyphicon.glyphicon-remove.not-complete data-id=task.id
         - if task.author == current_user
           td = link_to 'Edit', edit_task_path(task), class: 'btn btn-default'
           td = link_to 'Destroy', task, data: {:confirm => 'Are you sure?'}, :method => :delete, class: 'btn btn-danger'

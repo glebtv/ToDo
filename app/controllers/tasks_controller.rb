@@ -28,10 +28,14 @@ class TasksController < ApplicationController
   end
 
   def update
-    if @task.update(task_params)
-      redirect_to @task, notice: 'Task was successfully updated.'
-    else
-      render :edit
+    respond_to do |format|
+      if @task.update(task_params)
+        format.js{ head :ok}
+        format.html{redirect_to @task, notice: 'Task was successfully updated.'}
+      else
+        format.html{render :edit}
+        format.js{ render json: {errors: @task.errors.full_messages.join(", ")}, status: 422}
+      end
     end
   end
 
@@ -46,7 +50,7 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.require(:task).permit(:name, :content, :mutual_task, user_ids:[])
+      params.require(:task).permit(:name, :content, :mutual_task, :complete, user_ids:[])
     end
 
     def check_user
