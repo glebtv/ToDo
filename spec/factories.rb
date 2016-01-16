@@ -1,27 +1,14 @@
 FactoryGirl.define do
   factory :user do
-    name 'CJ'
-    email 'scca@ls.cc'
-    password '123123123'
-    password_confirmation '123123123'
-  end
-
-  factory :ryder, class: User do
-    name 'ryder'
-    email 'ryder@sa.gs'
+    name { FFaker::Name.first_name }
+    email { FFaker::Internet.email }
     password '123123123'
     password_confirmation '123123123'
   end
 
   factory :task do
-    name 'Go to'
-    content 'home, sweet home'
-  end
-
-  factory :created_task, class: Task do
-    name 'Go to'
-    content 'home, sweet home'
-    association :author
+    name { FFaker::Movie.title }
+    content { FFaker::BaconIpsum.paragraph }
   end
 
 end

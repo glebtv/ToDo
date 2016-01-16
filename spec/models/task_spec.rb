@@ -4,9 +4,9 @@ describe Task do
 
 
   before :each do
-    @user = FactoryGirl.create(:user)
-    @task = FactoryGirl.create(:task, author: @user)
-    @another_user = FactoryGirl.create(:ryder)
+    @user = create(:user)
+    @another_user = create(:user)
+    @task = create(:task, author: @user)
   end
 
   it 'should be valid' do
@@ -43,12 +43,12 @@ describe Task do
   end
 
   it "returns authored tasks by user" do
-    another_task = FactoryGirl.create(:task, author: @user)
+    another_task = create(:task, author: @user)
     expect(Task.authored(@user).to_a).to eq [another_task,@task]
   end
 
   it "returns tasks assigned to user" do
-    another_task = FactoryGirl.create(:task, author: @user)
+    another_task = create(:task, author: @user)
     @another_user.tasks << @task
     @another_user.tasks << another_task
     expect(Task.assigned(@another_user).to_a).to eq [another_task, @task]
