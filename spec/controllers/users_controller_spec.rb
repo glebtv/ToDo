@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe UsersController, :type => :controller do
 
-  before do
-    @user = FactoryGirl.create(:user)
+  before :each do
+    @user = create(:user)
     sign_in @user
   end
 
@@ -14,9 +14,10 @@ RSpec.describe UsersController, :type => :controller do
     end
 
     it "is successful" do
-      response.should be_success
+      expect(response).to be_success
       expect(response).to render_template("index")
     end
+
   end
 
   describe "GET profile" do
@@ -25,7 +26,7 @@ RSpec.describe UsersController, :type => :controller do
     end
 
     it "is successful" do
-      response.should be_success
+      expect(response).to be_success
       expect(response).to render_template("show")
     end
 

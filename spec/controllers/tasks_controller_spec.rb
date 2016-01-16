@@ -2,56 +2,53 @@ require "rails_helper"
 
 RSpec.describe TasksController, :type => :controller do
 
-  before do
-    @user = FactoryGirl.create(:user)
-    sign_in @user
-  end
+  before :each do
+    @user = create(:user)
+    @task = create(:task, author: @user)
 
-  let(:task){ FactoryGirl.create(:task, author: @user)}
-  let(:ryder){ FactoryGirl.create(:ryder) }
-  let(:another_task){ FactoryGirl.create(:task, author: ryder)}
-  let(:one_more_task){FactoryGirl.create(:task, author: ryder)}
+    @another_user = create(:user)
+    @another_task = create(:task, author: @another_user)
+    @one_more_task = create(:task, author: @another_user)
+
+    sign_in @user
+
+  end
 
   describe "Post create" do
 
     it "create successful" do
       expect{
-         post :create, task: FactoryGirl.attributes_for(:task)
-       }.to change(Task,:count).by(1)
+         post :create, task: attributes_for(:task)
+       }.to change(Task, :count).by(1)
     end
 
     it "should have author" do
-      post :create, task: FactoryGirl.attributes_for(:task)
-      Task.last.author.should eql @user
+      post :create, task: attributes_for(:task)
+      expect(assigns(:task).author).to eq @user
     end
 
   end
 
   describe "Put update" do
 
-
-    before :each do
-      @task = FactoryGirl.create(:task, author: @user)
-    end
-
     it "valid attributes" do
-      put :update, id: @task, task: FactoryGirl.attributes_for(:task)
-      assigns(:task).should eq(@task)
+      put :update, id: @task, task: attributes_for(:task)
+      expect(assigns(:task)).to eq @task
     end
 
     it "user can changes authored @task attributes" do
       put :update, id: @task,
-       task: FactoryGirl.attributes_for(:task, name: "Ride to", content: "las-venturas")
+       task: attributes_for(:task, name: "Ride to", content: "las-venturas")
       @task.reload
-      @task.name.should eq("Ride to")
-      @task.content.should eq("las-venturas")
-      @task.author.should eq @user
+      expect(@task.name).to eq("Ride to")
+      expect(@task.content).to eq("las-venturas")
+      expect(@task.author).to eq @user
     end
 
     it "user can changes NOT authored @task attributes" do
-      put :update, id: another_task,
-       task: FactoryGirl.attributes_for(:task)
-      response.should redirect_to '/'
+      put :update, id: @another_task,
+       task: attributes_for(:task)
+      expect(response).to redirect_to '/'
     end
 
   end
@@ -60,16 +57,16 @@ RSpec.describe TasksController, :type => :controller do
 
     it "should return only current user authored tasks" do
       get :index
-      assigns(:authored_task).should_not eq ([task,another_task])
-      assigns(:authored_task).should eq ([task])
+      expect(assigns(:authored_task)).to_not eq ([@task,@another_task])
+      expect(assigns(:authored_task)).to eq ([@task])
     end
 
     it "should show only assigned task" do
-      @user.tasks << another_task
+      @user.tasks << @another_task
       get :index
-      assigns(:visible_tasks).should eq ([another_task])
-      assigns(:visible_tasks).should_not eq ([another_task, one_more_task])
-      assigns(:authored_task).should eq ([task])
+      expect(assigns(:visible_tasks)).to eq ([@another_task])
+      expect(assigns(:visible_tasks)).to_not eq ([@another_task, @one_more_task])
+      expect(assigns(:authored_task)).to eq ([@task])
     end
 
   end
@@ -77,23 +74,30 @@ RSpec.describe TasksController, :type => :controller do
   describe "Get show" do
 
     it "should return task" do
-      get :show, id: task
-      assigns(:task).should eq task
+      get :show, id: @task
+      expect(assigns(:task)).to eq @task
     end
 
     it "not show to not assigned user" do
-      get :show, id: another_task
-      response.should redirect_to '/'
+      get :show, id: @another_task
+      expect(response).to redirect_to '/'
     end
 
   end
 
   describe "Delete destroy" do
 
-    it "deletes NOT authored task" do
-      delete :destroy, id: another_task
-      response.should redirect_to '/'
+    it "deletes authored task" do
+      expect{
+        delete :destroy, id: @task
+      }.to change(Task, :count).by(-1)
     end
+
+    it "deletes NOT authored task" do
+      delete :destroy, id: @another_task
+      expect(response).to redirect_to '/'
+    end
+
 
   end
 
