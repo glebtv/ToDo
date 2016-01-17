@@ -1,4 +1,10 @@
 .page-header
+  .pull-right
+    span.complete-label Status:
+    - if @task.complete
+      span.glyphicon.glyphicon-ok.complete data-id=@task.id
+    - else
+      span.glyphicon.glyphicon-remove.not-complete data-id=@task.id
   h1 #{@task.name}
 .page-content
   p #{@task.content}
